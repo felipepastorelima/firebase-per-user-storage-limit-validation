@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Firebase - Per user storage validation</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.css">
+    <link rel="stylesheet" href="./index.css">
+
+    <script defer src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script defer src="./firebase-init.js"></script>
+
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script defet src="https://unpkg.com/material-components-web@latest/dist/material-components-web.js"></script>
+    <script defer src="./index.js"></script>
+
+  </head>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-color--grey-100">
+      <main class="mdl-layout__content">
+        <div class="mdl-card mdl-shadow--6dp">
+
+          <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+            <h2 class="mdl-card__title-text">Firebase - Per user storage validation</h2>
+          </div>
+
+          <div id="spinner" style="display: none; width: 100%; margin-top: 20px; text-align: center">
+            <div class="mdl-spinner mdl-js-spinner is-active"></div>
+          </div>
+
+          <div id="form-content" style="display:none">
+            <div class="mdl-card__supporting-text">
+              <div class="mdl-list">
+                <li class="mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    User profile
+                  </span>
+                  <span class="mdl-list__item-secondary-action  mdl-typography--text-right">
+                    <select id="user-profile" class="mdc-select">
+                      <option value="none">None</option>
+                      <option value="free">Free user - 100KB</option>
+                      <option value="premium">Premium user - 500KB</option>
+                    </select>
+                  </span>
+                </li>
+
+                <li class="mdl-list__item">
+                  <span class="mdl-list__item-primary-content">
+                    Storage left in bytes
+                  </span>
+                  <span class="mdl-list__item-secondary-action">
+                    <span id="storage-left"></span>
+                  </span>
+                </li>
+              </div>
+
+                <p class="mdl-typography--text-center">
+                  Don't upload any file you don't wan't expose.
+                  <a id="delete-all-files-button" href="#!">
+                    Delete all files
+                  </a>
+                </p>
+            </div>
+
+            <div class="mdl-card__actions mdl-card--border">
+              <label>
+                <input type="file" style="position: absolute; left: -9999px" />
+                <span style="width: calc(100% - 32px)" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+                  Upload a file...
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div id="login-content" class="mdl-card__actions mdl-card--border">
+            <button id="login-button" style="width: 100%" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Log in with Google
+            </button>
+          </div>
+
+        </div>
+      </main>
+    </div>
+
+    <div id="error" class="mdl-js-snackbar mdl-snackbar mdl-color--red mdl-color-text--white">
+      <div class="mdl-snackbar__text"></div>
+      <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+
+  </body>
+</html>
