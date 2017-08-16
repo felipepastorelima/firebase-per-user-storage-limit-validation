@@ -75,10 +75,11 @@ class Uploader {
 
   static reauthenticateWithTokenAndUpload(file) {
     Spinner.show();
+    const destinationPath = `${Authentication.id}/${+new Date()}/${file.name}`;
 
-    this.reauthenticateWithToken()
+    this.reauthenticateWithTokenFor(destinationPath)
       .then(() => {
-        return this.upload(file).then(() => {
+        return this.upload(file, destinationPath).then(() => {
           return Storage.printStorageLeft().then(() => {
             $("input[type='file']").val(null);
             Spinner.hide();
@@ -100,24 +101,24 @@ class Uploader {
   * used to validate if the user has storage left to upload.
   * This method reauthenticate with this token.
   */
-  static reauthenticateWithToken() {
+  static reauthenticateWithTokenFor(path) {
     return firebase
       .auth()
       .currentUser
       .getToken(true)
       .then((idToken) => {
-        const url = `${functionsUrl}/uploadToken?token=${idToken}`;
+        const url = `${functionsUrl}/uploadToken?token=${idToken}&path=${path}`;
         return $.getJSON(url).then(response => {
           return firebase.auth().signInWithCustomToken(response.token);
         });
       });
   }
 
-  static upload(file) {
+  static upload(file, destinationPath) {
     return new Promise((resolve, reject) => {
       let uploadTask = firebase
         .storage()
-        .ref(`${Authentication.id}/${+new Date()}/${file.name}`)
+        .ref(destinationPath)
         .put(file);
 
       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, () => {}, (error) => {
