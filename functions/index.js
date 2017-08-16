@@ -1,6 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const serviceAccount = require('./service-account.json');
+const moment = require('moment');
 const cors = require('cors')({
   origin: true
 });
@@ -30,7 +31,8 @@ exports.uploadToken = functions.https.onRequest((request, response) => {
       Authentication.extractUidFromToken(request.query.token).then((uid) => {
         return Storage.storageLeftInBytes(uid).then(storageLeftInBytes => {
           const metadata = {
-            storageLeftInBytes: Number(storageLeftInBytes)
+            storageLeftInBytes: Number(storageLeftInBytes),
+            expirationTimeInMillis: +moment().add(1, 'minute')
           };
 
           return admin.auth().createCustomToken(uid, metadata).then((token) => {

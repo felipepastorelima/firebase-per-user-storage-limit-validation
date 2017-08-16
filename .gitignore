@@ -1,5 +1,6 @@
 node_modules/
 functions/service-account.json
+functions/package-lock.json
 .DS_Store
 *.log
 .firebaserc

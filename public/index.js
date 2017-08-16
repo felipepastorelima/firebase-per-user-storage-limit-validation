@@ -69,7 +69,7 @@ class Uploader {
         return;
       }
 
-      Uploader.reauthenticateWithTokenAndUpload(file[0]);
+      Uploader.reauthenticateWithTokenAndUpload(files[0]);
     });
   }
 

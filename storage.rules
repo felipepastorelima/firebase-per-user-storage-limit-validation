@@ -1,7 +1,9 @@
 service firebase.storage {
   match /b/{bucket}/o {
     match /{userId}/{allPaths=**} {
-      allow write: if request.auth.uid == userId && request.auth.token.storageLeftInBytes >= request.resource.size;
+      allow write: if request.auth.uid == userId
+        && request.auth.token.storageLeftInBytes >= request.resource.size
+        && request.auth.token.expirationTimeInMillis >= request.time.toMillis();
       allow read: if request.auth.uid == userId;
     }
   }
